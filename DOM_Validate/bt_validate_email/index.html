@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validate Email</title>
+</head>
+<body>
+    
+
+    <script>
+        function validateEmail(email) {
+            let regexEmail = /^\w+@[a-z]{3,}\.com$/i;
+            return regexEmail.test(email);
+        }
+
+        let email_1 = '_a@gmail.com';
+        let email_2 = 'vui_doan_hehe@yahoo.com';
+        let email_3 = 'abc@hotmail.com';
+        let email_4 = '@gmail.com';
+        let email_5 = 'ab@gmail.';
+        let email_6 = '@#abc@gmail.com';
+
+        console.log(validateEmail(email_1));
+        console.log(validateEmail(email_2));
+        console.log(validateEmail(email_3));
+        console.log(validateEmail(email_4));
+        console.log(validateEmail(email_5));
+        console.log(validateEmail(email_6));
+    </script>
+</body>
+</html>

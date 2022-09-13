@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validate Account</title>
+</head>
+<body>
+    
+
+    <script>
+        function valitateAccount(account) {
+            let regexAccount = /^[_a-z0-9]{6,}$/i;
+            return regexAccount.test(account)
+        }
+
+        let account_1 = '123abc_';
+        let account_2 = '_abc123';
+        let account_3 = '______';
+        let account_4 = '123456';
+        let account_5 = 'abcdefg';
+
+        let account_6 = '.@';
+        let account_7 = '12345';
+        let account_8 = '1234_';
+        let account_9 = 'abcde';
+
+        console.log(valitateAccount(account_1));
+        console.log(valitateAccount(account_2));
+        console.log(valitateAccount(account_3));
+        console.log(valitateAccount(account_4));
+        console.log(valitateAccount(account_5));
+        console.log(valitateAccount(account_6));
+        console.log(valitateAccount(account_7));
+        console.log(valitateAccount(account_8));
+        console.log(valitateAccount(account_9));
+
+    </script>
+</body>
+</html>

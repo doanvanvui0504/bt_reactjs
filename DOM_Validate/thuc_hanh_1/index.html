@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thực hành kiểm tra kí tự đầu tiên của chuỗi có phải là là chữ hoa.</title>
+</head>
+<body>
+    
+
+    <script>
+        function isFirstLetterUpperCase(str) {
+            regexp = /^[A-Z]/i;
+            console.log(`Chuỗi ${str} bắt đầu bằng kí tự in hoa: `, regexp.test(str));
+        }
+
+        let string1 = 'Doan Van Vui';
+        let string2 = 'DOAN VAN VUI';
+        let string3 = 'doan van vui';
+
+        isFirstLetterUpperCase(string1)
+        isFirstLetterUpperCase(string2)
+        isFirstLetterUpperCase(string3)
+
+    </script>
+</body>
+</html>
