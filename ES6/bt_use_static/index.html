@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng static trong ES6</title>
+</head>
+<body>
+    
+    <script>
+
+        class Infomation {
+            constructor(name, description) {
+                this.name = name,
+                this.description = description
+            }
+
+            getName() {
+                return this.name;
+            }
+
+            static calc(ref = 1) {
+                return ref*3;
+            }
+        }
+
+        class Geometry {
+            constructor(width, description) {
+                this.width = width,
+                this.description = description
+            }
+
+            getWidth() {
+                return this.width;
+            }
+
+            static calc(ref) {
+                return ref + ref
+            }
+        }
+
+        const iphone = new Infomation('Iphone', 'Developed by Apple');
+        console.log(Infomation.calc(2));
+
+        const rectangle = new Geometry(200, 'Đây là hình chữ nhật');
+        console.log(Geometry.calc(rectangle.getWidth()));
+
+        console.log(Geometry);
+
+    </script>
+
+</body>
+</html>
