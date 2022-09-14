@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xây dựng ứng dụng tìm ảnh động vui nhộn</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            font-family: sans-serif;
+        }
+
+        .app {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .app__title {
+            color: #fff;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            border: none;
+            outline: none;
+        }
+
+        .search__input {
+            padding: 10px 20px;    
+            border-radius: 6px;
+            font-size: 20px;
+            color: #333;
+            width: 320px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 20px;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search__btn {
+            background-color: #555;
+        }
+
+        .search__btn:hover {
+            background-color: #333;
+        }
+
+        .remove__btn {
+            background-color: rgb(176, 36, 1);
+        }
+
+        .remove__btn:hover {
+            background-color: red;
+        }
+
+        .list__image {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .list__image img {
+            width: 100%;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="app">
+        <h1 class="app__title">GIPHY PARTY</h1>
+        <input type="text" class="search__input" placeholder="Enter the keyword">
+        <button class="btn search__btn">Search Giphy!</button>
+        <button class="btn remove__btn">Remove Images</button>
+        <div class="list__image">
+        </div>
+    </div>
+    
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const inputElement = document.querySelector('.search__input')
+        const searchBtn = document.querySelector('.search__btn')
+        const removeBtn = document.querySelector('.remove__btn')
+        const listImageElement = document.querySelector('.list__image')
+
+        const apiKey = 'f0WON1TV5MribLYHCxkxiQKj2UfjxXsx'
+
+        const axioxInstance = axios.create({
+            baseURL: 'https://api.giphy.com/v1/gifs'
+        });
+
+        let listImage = []
+
+        const getImages = async (query) => {
+            try {
+                const response = await axioxInstance.get(`/search?q=${query}&api_key=${apiKey}`)
+                return response.data.data[0]
+            } catch(error) {
+                console.log(error)
+            }
+        }
+
+        const renderUI = (listImage) => {
+            let htmls = listImage.map(imageItem => `<img src='${imageItem.images.preview_gif.url}' alt='Gif'>`).join('')
+            listImageElement.innerHTML = htmls
+        }
+
+        searchBtn.onclick = async function () {
+            const query =  inputElement.value || 'batman'
+            let imageItem = await getImages(query)
+            listImage.push(imageItem)
+            renderUI(listImage)
+            inputElement.value = ''
+            inputElement.focus()
+        }
+
+        removeBtn.onclick = function () {
+            listImage = []
+            renderUI(listImage)
+        }
+
+    </script>
+</body>
+</html>
