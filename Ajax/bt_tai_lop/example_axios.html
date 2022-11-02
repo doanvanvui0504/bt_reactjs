@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Call API</title>
+  </head>
+  <body>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script>
+      const api = "https://6336eb8f65d1e8ef26761ebc.mockapi.io/test";
+
+      // GetList
+      (async () => {
+        try {
+          const params = { page: 1, limit: 5 };
+          const response = await axios.get(api, { params });
+          console.log(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+
+      //GetDetail
+      (async () => {
+        try {
+          const id = 2;
+          const response = await axios.get(api + `/${id}`);
+          console.log("detail: ", response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+
+      // Post
+      (async () => {
+        try {
+          const newData = {
+            name: "vuiDoan",
+            title: "This a new title",
+          };
+          const response = await axios.post(api, newData);
+          console.log("newData: ", response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+
+      // Put
+      (async () => {
+        try {
+          const id = 4;
+          const newData = {
+            name: "Hi anh em",
+            title: "This is a heading title",
+          };
+          const response = await axios.put(api + `/${id}`, newData);
+          console.log("put: ", response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+
+      //Delete
+      (async () => {
+        try {
+          const id = 5;
+          const response = await axios.delete(api + `/${id}`);
+          console.log("deleteData: ", response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    </script> -->
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

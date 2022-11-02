@@ -1,142 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Xây dựng ứng dụng thông tin thời tiết</title>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            background-color: #0d0d0d;
-            height: 100vh;
-            display: flex;
-            font-family: sans-serif;
-            font-size: 16px;
-        }
+      body {
+        background-color: #0d0d0d;
+        height: 100vh;
+        display: flex;
+        font-family: sans-serif;
+        font-size: 16px;
+      }
 
-        .app {
-            min-height: 200px;
-            width: 350px;
-            padding: 30px;
-            margin: auto;
-            border-radius: 20px;
-            color: #fff;
-            background-image: linear-gradient(
-                64.5deg,
-                rgba(245, 116, 185, 1) 14.7%,
-                rgba(89, 97, 223, 1) 88.7%
-            );
-        }
+      .app {
+        min-height: 200px;
+        width: 350px;
+        padding: 30px;
+        margin: auto;
+        border-radius: 20px;
+        color: #fff;
+        background-image: linear-gradient(
+          64.5deg,
+          rgba(245, 116, 185, 1) 14.7%,
+          rgba(89, 97, 223, 1) 88.7%
+        );
+      }
 
-        .search__input {
-            width: 100%;
-            padding: 8px 16px;
-            border-radius: 5px;
-            font-size: 16px;
-            border: none;
-            outline: none;
-            margin-bottom: 12px;
-        }
+      .search__input {
+        width: 100%;
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-size: 16px;
+        border: none;
+        outline: none;
+        margin-bottom: 12px;
+      }
 
-        .content {
-            text-align: center;
-        }
+      .content {
+        text-align: center;
+      }
 
-        .city, .country,
-        .location span {
-            font-size: 36px;
-        }
+      .city,
+      .country,
+      .location span {
+        font-size: 36px;
+      }
 
-        .date {
-            margin-top: 8px;
-        }
+      .date {
+        margin-top: 8px;
+      }
 
-        .temperature {
-            font-size: 50px;
-            margin-bottom: 20px;
-        }
+      .temperature {
+        font-size: 50px;
+        margin-bottom: 20px;
+      }
 
-        .more-desc {
-            display: flex;
-            justify-content: space-between;
-            align-self: center;
-        }
-
+      .more-desc {
+        display: flex;
+        justify-content: space-between;
+        align-self: center;
+      }
     </style>
-
-</head>
-<body>
-    
+  </head>
+  <body>
     <div class="app">
-        <input type="text" class="search__input" placeholder="Enter the City...">
-        <div class="content">
-            <div class="location">
-                <span class="city"></span>
-                <span class="separate"></span>
-                <span class="country"></span>
-            </div>
-            <div class="time">
-            </div>
-            <div class="temperature">
-                <span class="temp"></span>
-            </div>
-            <div class="more-desc">
-                <div class="desc-item-visibility"></div>
-                <div class="desc-item-speed"></div>
-                <div class="desc-item-humidity"></div>
-            </div>
+      <input type="text" class="search__input" placeholder="Enter the City..." />
+      <div class="content">
+        <div class="location">
+          <span class="city"></span>
+          <span class="separate"></span>
+          <span class="country"></span>
         </div>
+        <div class="time"></div>
+        <div class="temperature">
+          <span class="temp"></span>
+        </div>
+        <div class="more-desc">
+          <div class="desc-item-visibility"></div>
+          <div class="desc-item-speed"></div>
+          <div class="desc-item-humidity"></div>
+        </div>
+      </div>
     </div>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        const body = document.querySelector('body')
-        const inputSearch = document.querySelector('.search__input')
-        const cityElement = document.querySelector('.city')
-        const separateElement = document.querySelector('.separate')
-        const countryElement = document.querySelector('.country')
-        const time = document.querySelector('.time')
-        const tempElement = document.querySelector('.temp')
-        const visibilityElement = document.querySelector('.desc-item-visibility')
-        const speedElement = document.querySelector('.desc-item-speed')
-        const humidityElement = document.querySelector('.desc-item-humidity')
+      const body = document.querySelector('body');
+      const inputSearch = document.querySelector('.search__input');
+      const cityElement = document.querySelector('.city');
+      const separateElement = document.querySelector('.separate');
+      const countryElement = document.querySelector('.country');
+      const time = document.querySelector('.time');
+      const tempElement = document.querySelector('.temp');
+      const visibilityElement = document.querySelector('.desc-item-visibility');
+      const speedElement = document.querySelector('.desc-item-speed');
+      const humidityElement = document.querySelector('.desc-item-humidity');
 
-        const apiKey = ['152561bf3ff1db516b4746adbfbf0e33', '1243243243243242344sdvdvwq32', '1323435345432rdgrdgret342']
+      const apiKey = [
+        '152561bf3ff1db516b4746adbfbf0e33',
+        '1243243243243242344sdvdvwq32',
+        '1323435345432rdgrdgret342',
+      ];
 
-        const getInfo = async (api) => {
-            const res = await axios.get(api)
-            return res.data
-        }
+      const axiosInstance = axios.create({});
 
-        const handleEnterEvent = async (e) => {
-            if(e.keyCode === 13) {
-                let seachValue = inputSearch.value.trim() || 'Hanoi'
-                let api = `https://api.openweathermap.org/data/2.5/weather?q=${seachValue}&appid=${apiKey[0]}`
-                const infoItem = await getInfo(api)
-                cityElement.innerHTML = infoItem.name
-                separateElement.innerHTML= ','
-                countryElement.innerHTML = infoItem.sys.country
-                time.innerHTML = new Date().toLocaleString('vi')
-                tempElement.innerHTML = parseInt(infoItem.main.temp - 273.15) + ' <sup>o</sup>C'
-                visibilityElement.innerHTML =  `<span style="font-size: 20px">Visibility</span><br><span class="visibility">${infoItem.visibility}(m)</span>`
-                speedElement.innerHTML = `<span style="font-size: 20px">Speed</span><br><span class="speed">${infoItem.wind.speed}(m/s)</span>`
-                humidityElement.innerHTML = `<span style="font-size: 20px">Humidity</span><br><span class="humidity">${infoItem.main.humidity}(%)</span>`
-                inputSearch.value = ''
-                inputSearch.focus()
+      axiosInstance.interceptors.response.use(
+        (response) => response,
+        (error) => {
+          const status = error?.response.status;
+
+          switch (status) {
+            case 404: {
+              alert('Không tìm thấy vị trí mong muốn!');
+              break;
             }
+          }
+
+          return Promise.reject(error);
         }
+      );
 
+      const getInfo = async (api) => {
+        const res = await axiosInstance.get(api);
+        return res.data;
+      };
 
+      const handleEnterEvent = async (e) => {
+        if (e.keyCode === 13) {
+          let seachValue = inputSearch.value.trim() || 'Hanoi';
+          let api = `https://api.openweathermap.org/data/2.5/weather?q=${seachValue}&appid=${apiKey[0]}`;
+          const infoItem = await getInfo(api);
+          cityElement.innerHTML = infoItem.name;
+          separateElement.innerHTML = ',';
+          countryElement.innerHTML = infoItem.sys.country;
+          time.innerHTML = new Date().toLocaleString('vi');
+          tempElement.innerHTML = parseInt(infoItem.main.temp - 273.15) + ' <sup>o</sup>C';
+          visibilityElement.innerHTML = `<span style="font-size: 20px">Visibility</span><br><span class="visibility">${infoItem.visibility}(m)</span>`;
+          speedElement.innerHTML = `<span style="font-size: 20px">Speed</span><br><span class="speed">${infoItem.wind.speed}(m/s)</span>`;
+          humidityElement.innerHTML = `<span style="font-size: 20px">Humidity</span><br><span class="humidity">${infoItem.main.humidity}(%)</span>`;
+          inputSearch.value = '';
+          inputSearch.focus();
+        }
+      };
 
-        window.addEventListener('keyup', handleEnterEvent)
-
+      window.addEventListener('keyup', handleEnterEvent);
     </script>
-</body>
+  </body>
 </html>
